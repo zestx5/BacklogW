@@ -21,5 +21,10 @@ namespace zestx5.BacklogW.Domain.Entities
             Status = status;
             Genre = genre;
         }
+
+        public override string? ToString()
+        {
+            return $"{Name}";
+        }
     }
 }
