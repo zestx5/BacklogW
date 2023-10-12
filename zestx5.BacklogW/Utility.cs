@@ -15,7 +15,7 @@ namespace zestx5.BacklogW
                 new Game("The Last Of Us",GameStatus.Planned,new List<GameGenre>{GameGenre.Action,GameGenre.Adventure,GameGenre.PostApocalyptic}),
                 new Game("Ratchet & Clank: Rift Apart",GameStatus.Paused,new List<GameGenre>{GameGenre.Action,GameGenre.Adventure,GameGenre.Platformer}),
                 new Game("Cyberpunk 2077",GameStatus.Playing,new List<GameGenre>{GameGenre.Action,GameGenre.Shooter,GameGenre.RolePlaying,GameGenre.Cyberpunk}),
-                new Game("Assassin's Creed Odyssey",GameStatus.Playing,new List<GameGenre>{GameGenre.Action,GameGenre.OpenWorld,GameGenre.RolePlaying}),
+                new Game("Assassin's Creed Odyssey",GameStatus.Playing,new List<GameGenre>{GameGenre.Action,GameGenre.OpenWorld,GameGenre.RolePlaying},"UBISOFT TOP"),
             };
     }
 }

@@ -44,15 +44,12 @@ void ShowDetails(Game game)
     gameMenu.Add("Status: " + game.Status.ToString(), () => Console.Write(""));
 
     var genres = string.Empty;
-    game.Genre.ForEach(g => genres += g.GetLabel() + " ");
-    genres = genres.TrimEnd();
-    genres = genres.Replace(' ', ',');
+    game.Genre.ForEach(g => genres += g.GetLabel() + ", ");
+    genres = genres.TrimEnd().Remove(genres.Length - 2, 1);
     gameMenu.Add($"Genres: {genres}", () => Console.WriteLine(""));
 
-    if (game.Notes != "")
-    {
-        gameMenu.Add($"Notes: {game.Notes}", () => Console.Write(""));
-    }
+    var notes = game.Notes == "" ? "<empty>" : game.Notes;
+    gameMenu.Add($"Notes: {notes}", () => Console.Write(""));
 
     gameMenu.Add("Back", gameMenu.CloseMenu);
     gameMenu.Show();
