@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zestx5.BacklogW", "zestx5.BacklogW\zestx5.BacklogW.csproj", "{500BC84D-EC72-4BCA-B906-04178027B608}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zestx5.BacklogW.ConsoleUi", "zestx5.BacklogW.ConsoleUi\zestx5.BacklogW.ConsoleUi.csproj", "{6AAE3B96-4686-4CA3-A4EA-BFA03161EB78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{500BC84D-EC72-4BCA-B906-04178027B608}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{500BC84D-EC72-4BCA-B906-04178027B608}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{500BC84D-EC72-4BCA-B906-04178027B608}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AAE3B96-4686-4CA3-A4EA-BFA03161EB78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AAE3B96-4686-4CA3-A4EA-BFA03161EB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AAE3B96-4686-4CA3-A4EA-BFA03161EB78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AAE3B96-4686-4CA3-A4EA-BFA03161EB78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
