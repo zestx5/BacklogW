@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace zestx5.BacklogW.Domain
+namespace zestx5.BacklogW.Domain.Entities
 {
     public class Game
     {
@@ -12,9 +12,9 @@ namespace zestx5.BacklogW.Domain
         public string Name { get; private set; } = string.Empty;
         public string Notes { get; set; } = string.Empty;
         public GameStatus Status { get; set; }
-        public GameGenre Genre { get; set; }
+        public List<GameGenre> Genre { get; set; }
 
-        public Game(string name, string notes, GameStatus status, GameGenre genre)
+        public Game(string name, GameStatus status, List<GameGenre> genre, string notes = "")
         {
             Name = name;
             Notes = notes;

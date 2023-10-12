@@ -1,4 +1,4 @@
-﻿namespace zestx5.BacklogW.Domain
+﻿namespace zestx5.BacklogW.Domain.Entities
 {
     public static class GameGenreExtensions
     {
