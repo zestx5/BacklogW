@@ -11,11 +11,15 @@ namespace zestx5.BacklogW.Domain
         public Guid Guid { get; } = Guid.NewGuid();
         public string Name { get; private set; } = string.Empty;
         public string Notes { get; set; } = string.Empty;
+        public GameStatus Status { get; set; }
+        public GameGenre Genre { get; set; }
 
-        public Game(string name, string notes)
+        public Game(string name, string notes, GameStatus status, GameGenre genre)
         {
             Name = name;
             Notes = notes;
+            Status = status;
+            Genre = genre;
         }
     }
 }
