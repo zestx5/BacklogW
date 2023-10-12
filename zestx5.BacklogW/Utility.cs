@@ -9,7 +9,7 @@ namespace zestx5.BacklogW
 {
     internal static class Utility
     {
-        public static List<Game> GenerateStabData() => new()
+        public static List<Game> GenerateStubData() => new()
             {
                 new Game("Remnant 2",GameStatus.Playing,new List<GameGenre>{GameGenre.Action,GameGenre.Shooter,GameGenre.RolePlaying}),
                 new Game("The Last Of Us",GameStatus.Planned,new List<GameGenre>{GameGenre.Action,GameGenre.Adventure,GameGenre.PostApocalyptic}),

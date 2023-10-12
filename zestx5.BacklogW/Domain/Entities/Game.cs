@@ -9,8 +9,8 @@ namespace zestx5.BacklogW.Domain.Entities
     public class Game
     {
         public Guid Guid { get; } = Guid.NewGuid();
-        public string Name { get; private set; } = string.Empty;
-        public string Notes { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string? Notes { get; set; } = string.Empty;
         public GameStatus Status { get; set; }
         public List<GameGenre> Genre { get; set; }
 

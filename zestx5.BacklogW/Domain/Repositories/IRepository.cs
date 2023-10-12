@@ -19,7 +19,6 @@ namespace zestx5.BacklogW.Domain.Repositories
         void Update(TEntity entity);
 
         void Remove(TEntity entity);
-        void RemoveRange(IEnumerable<TEntity> entities);
     }
 
 }
