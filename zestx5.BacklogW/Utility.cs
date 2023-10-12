@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using zestx5.BacklogW.Domain.Entities;
+﻿using zestx5.BacklogW.Domain.Entities;
 
 namespace zestx5.BacklogW
 {
