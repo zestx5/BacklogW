@@ -6,6 +6,9 @@ namespace zestx5.BacklogW.ConsoleUi
 {
     internal static class Menu
     {
+        private const string allGames = "List all games";
+        private const string addGame = "Add a game";
+        private const string exit = "Exit";
         private static readonly InMemoryRepository _db = new();
 
         public static void DrawMainMenu()
@@ -17,13 +20,13 @@ namespace zestx5.BacklogW.ConsoleUi
             .Title("Select an [red]option[/]:")
             .PageSize(10)
             .AddChoices(
-                new[] { "List all", "Add a game", "Exit" }
+                new[] { allGames, addGame, exit }
                 )
             );
 
             switch (mainMenu)
             {
-                case "List all":
+                case "List all games":
                     ShowAll();
                     break;
                 case "Add a game":
@@ -36,9 +39,9 @@ namespace zestx5.BacklogW.ConsoleUi
 
         }
 
-        static void DrawCreateGameMenu()
+        private static void DrawCreateGameMenu()
         {
-            var title = AnsiConsole.Ask<string>("Enter game [red]title:[/]");
+            var title = AnsiConsole.Ask<string>("Enter a game [red]title:[/]");
             var genres = DrawGenreSelector();
             var status = DrawStatusSelector();
             var notes = AnsiConsole.Prompt(
@@ -54,7 +57,7 @@ namespace zestx5.BacklogW.ConsoleUi
             _db.Add(new Game(title, (GameStatus)Enum.Parse(typeof(GameStatus), status), genreList, notes));
         }
 
-        static string DrawStatusSelector()
+        private static string DrawStatusSelector()
         {
             AnsiConsole.Clear();
             var statusList = Enum.GetNames(typeof(GameStatus));
@@ -66,7 +69,7 @@ namespace zestx5.BacklogW.ConsoleUi
             return status;
         }
 
-        static IEnumerable<string> DrawGenreSelector()
+        private static IEnumerable<string> DrawGenreSelector()
         {
             AnsiConsole.Clear();
             var genreList = Enum.GetNames(typeof(GameGenre));
@@ -92,7 +95,7 @@ namespace zestx5.BacklogW.ConsoleUi
             ShowDetails(game);
         }
 
-        static void ShowDetails(Game game)
+        private static void ShowDetails(Game game)
         {
             AnsiConsole.Clear();
             var genres = string.Empty;
@@ -100,17 +103,79 @@ namespace zestx5.BacklogW.ConsoleUi
             genres = genres.Trim().Remove(genres.Length - 2, 1);
 
             var select = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
-            .Title("Select the [red]field[/] to edit:")
-            .AddChoices(
-            new[]
+                new SelectionPrompt<string>()
+                .Title("Select a [red]field[/] to edit:")
+                .AddChoices(
+                    new[]
+                    {
+                        $"Title: {game.Name}",
+                        $"Status: {game.Status}",
+                        $"Genres: {genres}",
+                        $"Notes: {game.Notes}",
+                        "Back"
+                    }
+                    ));
+            if (select == "Back")
             {
-                $"Title: {game.Name}",
-                $"Status: {game.Status}",
-                $"Genres: {genres}",
-                $"Notes: {game.Notes}"
+                return;
             }
-            ));
+            var selectSub = select.Substring(0, select.IndexOf(':'));
+            ParseSelection(selectSub, game);
+        }
+
+        private static void ParseSelection(string select, Game game)
+        {
+            switch (select)
+            {
+                case "Title":
+                    EditTitle(game);
+                    break;
+                case "Status":
+                    EditStatus(game);
+                    break;
+                case "Notes":
+                    EditNotes(game);
+                    break;
+                case "Genres":
+                    EditGenres(game);
+                    break;
+            };
+        }
+
+        private static void EditGenres(Game game)
+        {
+            // Old genres not persisted
+            var genreListNonParsed = DrawGenreSelector();
+            var genreList = new List<GameGenre>();
+            foreach (var genre in genreListNonParsed)
+            {
+                genreList.Add((GameGenre)Enum.Parse(typeof(GameGenre), genre));
+            }
+            game.Genre = genreList;
+            ShowDetails(game);
+        }
+
+        private static void EditNotes(Game game)
+        {
+            var notes = AnsiConsole.Prompt(
+                new TextPrompt<string>("[grey][[Optional]][/] [green]Enter notes:[/]")
+                .AllowEmpty());
+            game.Notes = notes;
+            ShowDetails(game);
+        }
+
+        private static void EditStatus(Game game)
+        {
+            var status = DrawStatusSelector();
+            game.Status = (GameStatus)Enum.Parse(typeof(GameStatus), status);
+            ShowDetails(game);
+        }
+
+        private static void EditTitle(Game game)
+        {
+            var title = AnsiConsole.Ask<string>($"Enter new title(current [red]{game.Name}[/]): ");
+            game.Name = title;
+            ShowDetails(game);
         }
     }
 }
