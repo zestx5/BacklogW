@@ -1,4 +1,5 @@
 ﻿using Spectre.Console;
+using System.Text.RegularExpressions;
 using zestx5.BacklogW.Domain.Entities;
 using zestx5.BacklogW.Infrastructure.Repositories;
 
@@ -112,13 +113,19 @@ namespace zestx5.BacklogW.ConsoleUi
                         $"Status: {game.Status}",
                         $"Genres: {genres}",
                         $"Notes: {game.Notes}",
-                        "Delete",
-                        "Back"
+                        "[red]Delete[/]",
+                        "[grey]Back[/]"
                     }
                     ));
 
-            var selectSub = select.Contains(':') ? select[..select.IndexOf(':')] : select;
+            var selectSub = select.Contains(':') ? select[..select.IndexOf(':')] : StripTags(select);
             ParseSelection(selectSub, game);
+        }
+        private static string StripTags(string str)
+        {
+            string pattern = "\\[.*[a-zA-Z]](.*)\\[\\/]";
+            var match = Regex.Match(str, pattern);
+            return match.Groups[1].Value;
         }
 
         private static void ParseSelection(string select, Game game)
