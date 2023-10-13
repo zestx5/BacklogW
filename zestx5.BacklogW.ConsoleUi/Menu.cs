@@ -27,7 +27,7 @@ namespace zestx5.BacklogW.ConsoleUi
             switch (mainMenu)
             {
                 case "List all games":
-                    ShowAll();
+                    DrawShowAll();
                     break;
                 case "Add a game":
                     DrawCreateGameMenu();
@@ -82,7 +82,7 @@ namespace zestx5.BacklogW.ConsoleUi
             return selectedGenres;
         }
 
-        static void ShowAll()
+        static void DrawShowAll()
         {
             var gamesNames = _db.GetAll().Select(g => g.Name);
 
@@ -92,10 +92,10 @@ namespace zestx5.BacklogW.ConsoleUi
                                        .MoreChoicesText("[grey](Move up and down to reveal more games)[/]")
                                        .AddChoices(_db.GetAll()));
 
-            ShowDetails(game);
+            DrawShowDetails(game);
         }
 
-        private static void ShowDetails(Game game)
+        private static void DrawShowDetails(Game game)
         {
             AnsiConsole.Clear();
             var genres = string.Empty;
@@ -112,14 +112,12 @@ namespace zestx5.BacklogW.ConsoleUi
                         $"Status: {game.Status}",
                         $"Genres: {genres}",
                         $"Notes: {game.Notes}",
+                        "Delete",
                         "Back"
                     }
                     ));
-            if (select == "Back")
-            {
-                return;
-            }
-            var selectSub = select.Substring(0, select.IndexOf(':'));
+
+            var selectSub = select.Contains(':') ? select[..select.IndexOf(':')] : select;
             ParseSelection(selectSub, game);
         }
 
@@ -128,21 +126,26 @@ namespace zestx5.BacklogW.ConsoleUi
             switch (select)
             {
                 case "Title":
-                    EditTitle(game);
+                    DrawEditTitle(game);
                     break;
                 case "Status":
-                    EditStatus(game);
+                    DrawEditStatus(game);
                     break;
                 case "Notes":
-                    EditNotes(game);
+                    DrawEditNotes(game);
                     break;
                 case "Genres":
-                    EditGenres(game);
+                    DrawEditGenres(game);
                     break;
+                case "Delete":
+                    _db.Remove(game);
+                    break;
+                case "Back":
+                    return;
             };
         }
 
-        private static void EditGenres(Game game)
+        private static void DrawEditGenres(Game game)
         {
             // Old genres not persisted
             var genreListNonParsed = DrawGenreSelector();
@@ -152,30 +155,30 @@ namespace zestx5.BacklogW.ConsoleUi
                 genreList.Add((GameGenre)Enum.Parse(typeof(GameGenre), genre));
             }
             game.Genre = genreList;
-            ShowDetails(game);
+            DrawShowDetails(game);
         }
 
-        private static void EditNotes(Game game)
+        private static void DrawEditNotes(Game game)
         {
             var notes = AnsiConsole.Prompt(
                 new TextPrompt<string>("[grey][[Optional]][/] [green]Enter notes:[/]")
                 .AllowEmpty());
             game.Notes = notes;
-            ShowDetails(game);
+            DrawShowDetails(game);
         }
 
-        private static void EditStatus(Game game)
+        private static void DrawEditStatus(Game game)
         {
             var status = DrawStatusSelector();
             game.Status = (GameStatus)Enum.Parse(typeof(GameStatus), status);
-            ShowDetails(game);
+            DrawShowDetails(game);
         }
 
-        private static void EditTitle(Game game)
+        private static void DrawEditTitle(Game game)
         {
             var title = AnsiConsole.Ask<string>($"Enter new title(current [red]{game.Name}[/]): ");
             game.Name = title;
-            ShowDetails(game);
+            DrawShowDetails(game);
         }
     }
 }
